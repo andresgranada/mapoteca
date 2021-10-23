@@ -11,3 +11,179 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.maps {
+  width: 80%; 
+  max-width: 100%; 
+  display: inline-block;
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+.navbarClass {
+  height: 10vh;
+  width: 100%;
+  background-color: #3434a1;
+  display: flex;
+  align-items: center;
+}
+
+.navbarClass .filters {
+  width: 40%;
+  margin-left: auto;
+}
+
+.navbarClass .logo {
+  margin-left: 20px;
+  color: white;
+}
+
+.navbarClass .filters .filter {
+  width: 40%;
+  margin-left: 5%;
+  display: inline-block;
+  position: relative;
+}
+
+.mapCard {
+  width: 95%;
+  border-radius: .25rem;
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.mapCard .hoverMap {
+  background-color: black;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+}
+
+.mapCard .hoverMap:hover {
+  opacity: 0.3;
+}
+
+.mapCard img {
+  width: 100%;
+}
+
+.mapCard .addCar {
+  background-color: #ff7703;
+  padding: 5px 0;
+  border-radius: 5px;
+  position: absolute;
+  width: 100%;
+  bottom: 64px;
+  cursor: pointer;
+}
+
+.mapCard .detailMap {
+  background: #3435a1;
+  padding: 5px 0;
+  border-radius: 5px;
+  position: absolute;
+  width: 100%;
+  bottom: 64px;
+  color: white;
+  cursor: pointer;
+}
+
+.addItem {
+  position: absolute;
+  bottom: 5px;
+  right: 20px;
+  font-size: 49px;
+  cursor: pointer;
+}
+
+.imageDetail {
+  width: 40%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.imageDetail img {
+  width: 100%;
+}
+
+.nameDetail {
+  text-align: center;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+.descriptionDetail {
+  text-align: center;
+}
+
+.backToMaps {
+  float: left;
+  font-size: 30px;
+  margin: 15px;
+  cursor: pointer;
+}
+
+.backToMaps:hover {
+  opacity: 0.5;
+}
+
+.mapDetail .addCar {
+  background-color: #ff7703;
+  padding: 5px 0;
+  border-radius: 5px;
+  width: 20%;
+  bottom: 64px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 600;
+  margin: 0 auto;
+}
+
+.pro-sidebar-inner {
+  background-color: #0f106e !important;
+}
+
+.favorites .detailMap {
+  background: #3435a1;
+  padding: 5px 0;
+  border-radius: 5px;
+  position: absolute;
+  width: 100%;
+  bottom: 64px;
+  color: white;
+  cursor: pointer;
+}
+
+.pro-sidebar .pro-menu .pro-menu-item.active {
+  font-weight: 800;
+  font-size: 17px;
+}
+
+.mapForm .backToMaps {
+  font-size: 30px;
+  margin: 15px;
+  cursor: pointer;
+  position: absolute;
+  top: 80px;
+}
+
+.inputBuscar {
+  display: inline-block;
+}
+
+.inputBuscar input {
+  background-color: transparent;
+  color: white;
+  border-color: white;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  margin-top: 20px;
+}
+
+.inputBuscar input::placeholder {
+  color: white;
+}
+
