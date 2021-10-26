@@ -28,8 +28,11 @@ const MapDetail = (props) => {
             <div className="imageDetail">
                 <img src="https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4" />
             </div>
-            <p className="nameDetail">{mapToShow.Titulo}</p>
-            <p className="descriptionDetail">{mapToShow.Tipo}</p>
+            <p style={{textAlign: "center", fontSize: "20px"}}><span style={{fontWeight: 700}}>Título:</span> {mapToShow.Titulo}</p>
+            <p style={{textAlign: "center", fontSize: "20px"}}><span style={{fontWeight: 700}}>Tipo:</span> {mapToShow.Tipo}</p>
+            <p style={{textAlign: "center", fontSize: "20px"}}><span style={{fontWeight: 700}}>Empresa:</span> {mapToShow.Empresa}</p>
+            <p style={{textAlign: "center", fontSize: "20px"}}><span style={{fontWeight: 700}}>Escala:</span> {mapToShow.Escala}</p>
+            <p style={{textAlign: "center", fontSize: "20px"}}><span style={{fontWeight: 700}}>Zona Geografica:</span> {mapToShow.Zona_Geografica}</p>
             {
                 !hideReserve && (
                     <div className="addCar">Reservar</div>

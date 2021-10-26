@@ -20,7 +20,7 @@ const style = {
 
 const FormComponent = (props) => {
 
-    const { idFormToShow, setIdFormToShow } = props;
+    const { idFormToShow, setIdFormToShow, getMapas } = props;
     const [mapToShow, setMapToShow] = useState({
         Empresa: "",
         Escala: "",
@@ -45,6 +45,22 @@ const FormComponent = (props) => {
                 body: JSON.stringify(mapToShow),
             });
             const exitoso = await respuesta.json();
+
+            if (exitoso) {
+                setIdFormToShow(false);
+                getMapas();
+            }
+        } else {
+            const respuesta = await fetch(`${Constantes.RUTA_API}/crud/actualizar_mapa.php`, {
+                method: "PUT",
+                body: JSON.stringify(mapToShow),
+            });
+            const exitoso = await respuesta.json();
+
+            if (exitoso) {
+                setIdFormToShow(false);
+                getMapas();
+            }
         }
     }
 

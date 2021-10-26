@@ -44,7 +44,7 @@ const Maps = () => {
                         <Fragment>
                             <div className="mapForm">
                                 <FontAwesomeIcon onClick={()=>{setIdFormToShow(false)}} className="backToMaps" icon={faArrowLeft} />
-                                <Form idFormToShow={idFormToShow} setIdFormToShow={setIdFormToShow} />
+                                <Form getMapas={getMapas} idFormToShow={idFormToShow} setIdFormToShow={setIdFormToShow} />
                             </div>
                         </Fragment>
                     )
