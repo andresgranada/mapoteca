@@ -3,6 +3,8 @@ import { Card, Dropdown, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { Modal, Box, Typography } from '@mui/material';
+import Constantes from "../../../Constants/Constantes";
+
 
 const style = {
   position: 'absolute',
@@ -18,24 +20,64 @@ const style = {
 
 const FormComponent = (props) => {
 
-    if (props.detail) {
-        const { id, name, description, available, img } = props.detail;
+    const { idFormToShow, setIdFormToShow } = props;
+    const [mapToShow, setMapToShow] = useState({
+        Empresa: "",
+        Escala: "",
+        ID: null,
+        Tipo: "",
+        Titulo: "",
+        Zona_Geografica: ""
+    });
+
+    useEffect(async () => {
+        if (idFormToShow && idFormToShow !== "new") {
+            const respuesta = await fetch(`${Constantes.RUTA_API}/crud/obtener_mapa.php?id=${idFormToShow}`);
+            setMapToShow(await respuesta.json());
+        }
+    }, [idFormToShow])
+
+    const guardarMapa = async (evento) => {
+        evento.preventDefault();
+        if (!mapToShow.ID) {
+            const respuesta = await fetch(`${Constantes.RUTA_API}/crud/crear_mapa.php`, {
+                method: "POST",
+                body: JSON.stringify(mapToShow),
+            });
+            const exitoso = await respuesta.json();
+        }
     }
 
     return(
         <div className="form">
-            <Form style={{width: "60%", margin: "50px auto"}}>
+            <Form style={{width: "60%", margin: "50px auto"}} onSubmit={guardarMapa}>
                 <div style={{width: "100%", textAlign: "center"}}>
                     <img style={{width: "50%"}} src={props.detail && props.detail.img ? props.detail.img : ""} />
                 </div>
-                <Form.Group className="mb-3" controlId="name">
-                    <Form.Label>Nombre</Form.Label>
-                    <Form.Control defaultValue={props.detail && props.detail.name ? props.detail.name : ""} type="text" placeholder="Nombre" />
+                <Form.Group className="mb-3" controlId="title">
+                    <Form.Label>Título</Form.Label>
+                    <Form.Control onChange={(e)=>{setMapToShow({...mapToShow, Titulo: e.target.value})}} defaultValue={mapToShow.Titulo} type="text" placeholder="Título" />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="description">
-                    <Form.Label>Descripción</Form.Label>
-                    <Form.Control defaultValue={props.detail && props.detail.description ? props.detail.description : ""} as="textarea" rows={4} placeholder="Descripción" />
+                <Form.Group className="mb-3" controlId="type">
+                    <Form.Label>Tipo</Form.Label>
+                    <Form.Control onChange={(e)=>{setMapToShow({...mapToShow, Tipo: e.target.value})}} defaultValue={mapToShow.Tipo} type="text" placeholder="Tipo" />
                 </Form.Group>
+                <Form.Group className="mb-3" controlId="company">
+                    <Form.Label>Empresa</Form.Label>
+                    <Form.Control onChange={(e)=>{setMapToShow({...mapToShow, Empresa: e.target.value})}} defaultValue={mapToShow.Empresa} type="text" placeholder="Empresa" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="scale">
+                    <Form.Label>Escala</Form.Label>
+                    <Form.Control onChange={(e)=>{setMapToShow({...mapToShow, Escala: e.target.value})}} defaultValue={mapToShow.Escala} type="text" placeholder="Escala" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="zona">
+                    <Form.Label>Zona Geografica</Form.Label>
+                    <Form.Control onChange={(e)=>{setMapToShow({...mapToShow, Zona_Geografica: e.target.value})}} defaultValue={mapToShow.Zona_Geografica} type="text" placeholder="Zona Geografica" />
+                </Form.Group>
+                <div className="buttons">
+                    <Button type="submit" variant="primary">{!mapToShow.ID ? "Crear" : "Guardar"}</Button>{' '}
+                    <Button style={{float: "right"}} onClick={()=> {setIdFormToShow(false)}} variant="danger">Cancelar</Button>{' '}
+                </div>
             </Form>
         </div>
     )

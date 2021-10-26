@@ -3,6 +3,10 @@ import { Card, Dropdown, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { Modal, Box, Typography } from '@mui/material';
+import Constantes from "../../../Constants/Constantes";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const style = {
   position: 'absolute',
@@ -16,6 +20,20 @@ const style = {
   p: 4,
 };
 
+<ToastContainer
+    position="top-right"
+    autoClose={5000}
+    hideProgressBar={false}
+    newestOnTop={false}
+    closeOnClick
+    rtl={false}
+    pauseOnFocusLoss
+    draggable
+    pauseOnHover
+    />
+    {/* Same as */}
+<ToastContainer />
+
 const Map = (props) => {
 
     const [ showItems, setShowItems ] = useState(false);
@@ -23,11 +41,20 @@ const Map = (props) => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const { id, name, description, available, img } = props.mapInfo;
-    const { setFormToShow } = props;
+    const { ID, Titulo, TIPO, ZONA_GEOGRAFICA, EMPRESA } = props.mapInfo;
+    const { setIdFormToShow, getMapas } = props;
 
     const toggle = () => {
         setShowItems(!showItems);
+    }
+
+    const eliminarMapa = async () => {
+        const respuesta = await fetch(`${Constantes.RUTA_API}/crud/eliminar_mapa.php?id=${ID}`);
+        const ok = await respuesta.json();
+        if (ok) {
+            handleClose();
+            getMapas();
+        }
     }
 
     const ModalComponent = () => {
@@ -44,7 +71,7 @@ const Map = (props) => {
                     ¿Estás seguro de eliminar el mapa?
                     </Typography>
                     <div id="modal-modal-description" sx={{ mt: 2 }} style={{textAlign: "center"}}>
-                        <Button variant="danger">Aceptar</Button>{' '}
+                        <Button onClick={eliminarMapa} variant="danger">Aceptar</Button>{' '}
                         <Button onClick={handleClose} variant="primary">Cancelar</Button>{' '}
                     </div>
                 </Box>
@@ -65,13 +92,13 @@ const Map = (props) => {
                     <Dropdown.Menu>
                         {/* <Dropdown.Item href="#/action-3"><FontAwesomeIcon icon={faPencilAlt}/></Dropdown.Item>
                         <Dropdown.Item href="#/action-3"><FontAwesomeIcon icon={faTrashAlt}/></Dropdown.Item> */}
-                        <Dropdown.Item onClick={()=>{setFormToShow(id)}} >Actualizar</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>{setIdFormToShow(ID)}} >Actualizar</Dropdown.Item>
                         <Dropdown.Item onClick={handleOpen} >Eliminar</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
-                <Card.Img variant="top" src={img} />
+                <Card.Img variant="top" src="https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4" />
                 <Card.Body>
-                <Card.Title>{name}</Card.Title>
+                <Card.Title>{Titulo}</Card.Title>
                 </Card.Body>
             </Card>
             <br />

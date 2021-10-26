@@ -5,8 +5,8 @@ const Map = (props) => {
 
     const [ showItems, setShowItems ] = useState(false);
 
-    const { id, name, description, available, img } = props.mapInfo;
-    const { setMapToShow, hideReserve, showReserve, setOpenReserve, setMapSelected } = props;
+    const { ID, Titulo, TIPO, ZONA_GEOGRAFICA, EMPRESA } = props.mapInfo;
+    const { setIdMapToShow, hideReserve, showReserve, setOpenReserve, setMapSelected } = props;
 
     const toggle = () => {
         setShowItems(!showItems);
@@ -16,15 +16,15 @@ const Map = (props) => {
         <div className="mapCard">
             <Card style={{textAlign: "center"}} onMouseOver={toggle} onMouseOut={toggle}>
                 <div className="hoverMap"></div>
-                <div className="detailMap" onClick={()=> {setMapToShow(id)}} >Ver detalle</div>
+                <div className="detailMap" onClick={()=> {setIdMapToShow(ID)}} >Ver detalle</div>
                 {
                     showReserve && (
-                        <div onClick={()=>{setOpenReserve(true); setMapSelected(name)}} className="addCar">Reservar</div>
+                        <div onClick={()=>{setOpenReserve(true); setMapSelected(Titulo)}} className="addCar">Reservar</div>
                     )
                 }
-                <Card.Img variant="top" src={img} />
+                <Card.Img variant="top" src="https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4" />
                 <Card.Body>
-                <Card.Title>{name}</Card.Title>
+                <Card.Title>{Titulo}</Card.Title>
                 </Card.Body>
             </Card>
             <br />

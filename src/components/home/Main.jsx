@@ -4,7 +4,6 @@ import Maps from './Maps';
 import Reserved from './reserved/Reserved';
 import Favorites from './favorites/Favorites';
 import Sidebar from '../Sidebar';
-import Constantes from "../../Constants/Constantes";
 
 function Home() {
 
@@ -15,11 +14,6 @@ function Home() {
         setElementSelected(itemSelectedSwitch(itemSelected));
     }, [itemSelected])
     
-    useEffect(async () => {
-      const respuesta = await fetch(`${Constantes.RUTA_API}/obtener_videojuegos.php`);
-      const videojuegos = await respuesta.json();
-      console.log(videojuegos);
-    }, [])
 
     const itemSelectedSwitch = (key) => {
       console.log(key);

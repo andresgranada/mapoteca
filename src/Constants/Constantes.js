@@ -1,4 +1,4 @@
 const Constantes = {
-    RUTA_API: "http://localhost/api-php-react",
+    RUTA_API: "http://localhost/mapoteca",
 };
 export default Constantes;
