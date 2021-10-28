@@ -2,32 +2,49 @@ import Map from '../../home/Map';
 import React, { useState, useEffect, Fragment } from "react";
 import { Container, Col, Row } from 'reactstrap';
 import ModalReserve from './ModalReserve';
+import Constantes from "../../../Constants/Constantes";
+
 
 
 const MapsReserve = () => {
-    const [ maps, setMaps ] = useState([
-        {id: '01', name: 'Mapa de Colombia', description: 'Pais Tropical', available: true, img: 'https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4'},
-        {id: '02', name: 'Mapa de Mexico', description: 'Pais con muchas playas', available: true, img: 'https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4'},
-    ]);
+    const [ maps, setMaps ] = useState([]);
 
     const [ openReserve, setOpenReserve ] = useState(false);
     const [ mapSelected, setMapSelected ] = useState('');
 
     useEffect(()=>{
-        console.log(openReserve);
-        console.log(mapSelected);
-    },[openReserve])
+        getMapas();
+    },[])
+
+    const getMapas = async () => {
+        const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/obtener_mapas.php`);
+        setMaps(await respuesta.json());
+    }
+
+    const sendData = async (data) => {
+        if (data) {
+            const respuesta = await fetch(`${Constantes.RUTA_API}/crud/reservas/reservar.php`, {
+                method: "POST",
+                body: JSON.stringify(data),
+            });
+            const exitoso = await respuesta.json();
+
+            if (exitoso) {
+                setOpenReserve(false);
+            }
+        }
+    }
 
     return(
         <div className="maps">
             <Container fluid>
+                <ModalReserve open={openReserve} setOpen={setOpenReserve} mapName={mapSelected} sendData={sendData} />
                 <Row>
                     { maps.map((map, i) => {
                         console.log(map);
                         return(
                             <Col key={i} xs="12" md="4" sm="6" style={{textAlign: "center"}} >
                                 <Map mapInfo={map} showReserve={true} setOpenReserve={setOpenReserve} setMapSelected={setMapSelected} />
-                                <ModalReserve open={openReserve} setOpen={setOpenReserve} mapName={mapSelected} />
                             </Col>
                         )
                     }) }

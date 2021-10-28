@@ -5,7 +5,6 @@ import { faCog, faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icon
 import { Modal, Box, Typography } from '@mui/material';
 import Constantes from "../../../Constants/Constantes";
 
-
 const style = {
   position: 'absolute',
   top: '50%',
@@ -22,6 +21,7 @@ const FormComponent = (props) => {
 
     const { idFormToShow, setIdFormToShow, getMapas } = props;
     const [mapToShow, setMapToShow] = useState({
+        Imagen: "",
         Empresa: "",
         Escala: "",
         ID: null,
@@ -32,7 +32,7 @@ const FormComponent = (props) => {
 
     useEffect(async () => {
         if (idFormToShow && idFormToShow !== "new") {
-            const respuesta = await fetch(`${Constantes.RUTA_API}/crud/obtener_mapa.php?id=${idFormToShow}`);
+            const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/obtener_mapa.php?id=${idFormToShow}`);
             setMapToShow(await respuesta.json());
         }
     }, [idFormToShow])
@@ -40,7 +40,7 @@ const FormComponent = (props) => {
     const guardarMapa = async (evento) => {
         evento.preventDefault();
         if (!mapToShow.ID) {
-            const respuesta = await fetch(`${Constantes.RUTA_API}/crud/crear_mapa.php`, {
+            const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/crear_mapa.php`, {
                 method: "POST",
                 body: JSON.stringify(mapToShow),
             });
@@ -51,7 +51,7 @@ const FormComponent = (props) => {
                 getMapas();
             }
         } else {
-            const respuesta = await fetch(`${Constantes.RUTA_API}/crud/actualizar_mapa.php`, {
+            const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/actualizar_mapa.php`, {
                 method: "PUT",
                 body: JSON.stringify(mapToShow),
             });
@@ -67,9 +67,10 @@ const FormComponent = (props) => {
     return(
         <div className="form">
             <Form style={{width: "60%", margin: "50px auto"}} onSubmit={guardarMapa}>
-                <div style={{width: "100%", textAlign: "center"}}>
-                    <img style={{width: "50%"}} src={props.detail && props.detail.img ? props.detail.img : ""} />
-                </div>
+                {/* <Form.Group className="mb-3" controlId="title">
+                    <Form.Label>Url Imagen</Form.Label>
+                    <Form.Control onChange={(e)=>{setMapToShow({...mapToShow, Titulo: e.target.value})}} defaultValue={mapToShow.Titulo} type="text" placeholder="Imagen" />
+                </Form.Group> */}
                 <Form.Group className="mb-3" controlId="title">
                     <Form.Label>Título</Form.Label>
                     <Form.Control onChange={(e)=>{setMapToShow({...mapToShow, Titulo: e.target.value})}} defaultValue={mapToShow.Titulo} type="text" placeholder="Título" />

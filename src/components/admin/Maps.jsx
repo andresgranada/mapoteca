@@ -8,18 +8,25 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import Constantes from "../../Constants/Constantes";
 
 
-const Maps = () => {
+const Maps = (props) => {
+
+    const { filtro } = props;
 
     const [idFormToShow, setIdFormToShow] = useState(false);
-
     const [ maps, setMaps ] = useState([]);
 
     useEffect(async () => {
         getMapas();
     }, [])
 
+    useEffect(()=>{
+        if (filtro.length >= 0) {
+            setMaps(filtro);
+        }
+    }, [filtro])
+
     const getMapas = async () => {
-        const respuesta = await fetch(`${Constantes.RUTA_API}/crud/obtener_mapas.php`);
+        const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/obtener_mapas.php`);
         setMaps(await respuesta.json());
     }
 

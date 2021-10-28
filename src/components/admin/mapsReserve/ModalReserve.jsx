@@ -2,6 +2,17 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Modal, Box, Typography } from '@mui/material';
 import Select2 from "react-select2-wrapper";
 import { Card, Dropdown, Button } from 'react-bootstrap';
+import Constantes from "../../../Constants/Constantes";
+
+import {
+    Row,
+    Col,
+    Collapse,
+    FormGroup,
+    Label,
+    ButtonGroup,
+    Input,
+} from 'reactstrap';
 
 const style = {
   position: 'absolute',
@@ -10,30 +21,94 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+//   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
 
 const ModalReserve = (props) => {
 
-    const { open, setOpen, mapName } = props;
-
-    const users = [
-        {codigo: "1234567893", name: "Maiguel", age: 21},
-        {codigo: "1152713422", name: "Jairo Andres Granada", age: 23},
-        {codigo: "1374832445", name: "Angie Paola", age: 17},
-        {codigo: "5643677334", name: "Gustavo", age: 32},
-        {codigo: "9087656565", name: "Andres Vasco", age: 25},
-    ]
+    const { open, setOpen, mapName, sendData, mapEdit } = props;
+    const [ maps, setMaps ] = useState();
+    const [ users, setUsers ] = useState([]);
+    const [ date, setDate ] = useState("");
+    const [ mapSelected, setMapSelected ] = useState({
+        Imagen: "",
+        Empresa: "",
+        Escala: "",
+        ID: null,
+        Tipo: "",
+        Titulo: "",
+        Zona_Geografica: ""
+    });
+    const [ userSelected, setUserSelected ] = useState({
+        ApellidoM: "",
+        ApellidoP: "",
+        Direccion: "",
+        ID: null,
+        Nombre: "",
+        Password: "",
+        Usuarios: ""
+    });
 
     const handleClose = () => {
+        setUserSelected({
+            ApellidoM: "",
+            ApellidoP: "",
+            Direccion: "",
+            ID: null,
+            Nombre: "",
+            Password: "",
+            Usuarios: ""
+        });
         setOpen(false);
     }
 
-    const options = {
-        placeholder: "Select"
-    };
+    useEffect(()=>{
+        getMaps();
+        getUsers();
+    }, [])
+    
+    useEffect(()=>{
+        if (mapName) {
+            setMapSelected(mapName);
+        }
+    }, [mapName])
+    
+    
+    useEffect(()=>{
+        if (mapEdit) {
+            setMapSelected(mapEdit);
+            setUserSelected({...userSelected, ID: mapEdit.Clave_Usuario});
+            setDate(mapEdit.Fecha_Devolucion);
+        }
+    }, [mapEdit])
+
+    const getMaps = async () => {
+        const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/obtener_mapas.php`);
+        setMaps(await respuesta.json());
+    }
+    
+    const getUsers = async () => {
+        const respuesta = await fetch(`${Constantes.RUTA_API}/crud/usuarios/obtener_usuarios.php`);
+        setUsers(await respuesta.json());
+    }
+
+    const handleChange = (e) => {
+        setDate(e.target.value);
+    }
+
+    const saveData = async () => {
+        if (mapSelected.ID && userSelected.ID && date) {
+            sendData({
+                ID_mapa: mapSelected.ID,
+                ID_usuario: userSelected.ID,
+                Fecha_devolucion: date,
+            });
+        } else {
+            alert("Completar todos los campos");
+        }
+    }
 
     return(
         <Modal
@@ -41,40 +116,76 @@ const ModalReserve = (props) => {
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
+            id="Modal"
         >
-            <Box sx={style}>
+            <Box sx={style} tabIndex="none">
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Mapa: {mapName}
+                    Mapa: {mapSelected.Titulo}
                 </Typography>
                 <div id="modal-modal-description" sx={{ mt: 2 }}>
-                    <div className="col form-group form-group-float">              
-                        <label                
-                            className="form-group-float-label animate"                
-                            htmlFor="id_tipo_red_serv"              
-                        >                
-                            Usuario             
-                        </label>              
+                    <FormGroup className="form-group-float" style={{marginBottom: "10px"}}>
+                        <Label
+                            htmlFor="usuario"
+                        >
+                            Usuario
+                        </Label>
+
                         <Select2
-                            name="id_tipo_red_serv"
-                            id="id_tipo_red_serv"
-                            value={users[0].codigo}
-                            // onSelect={1}
-                            options={{
-                                placeholder: "test",                
-                            }}                
-                            className="form-control"                
-                            data={                  
-                                users.map((item, i) => {
-                                    return{
-                                        id: item.codigo,
-                                        text: item.name
-                                    }
-                                })
-                            }                
-                        />            
-                    </div>
+                            name="usuario"
+                            id="usuario"
+                            value={userSelected.ID}
+                            onChange={(e) => {
+                              if (userSelected && userSelected.ID !== e.target.value) {
+                                setUserSelected({...userSelected, ID: e.target.value})
+                              }
+                            }}
+                            options={{ placeholder: "Usuario" }}
+                            className="form-control"
+                            data={users && users.map(item => {
+                                return {id: item.ID, text: `${item.ID} - ${item.Nombre}`}
+                            })}
+                        />
+                    </FormGroup>
+                    <FormGroup className="form-group-float" style={{marginBottom: "10px"}}>
+                        <Label
+                            htmlFor="mapa"
+                        >
+                            Mapa
+                        </Label>
+
+                        <Select2
+                            name="mapa"
+                            id="mapa"
+                            value={mapSelected.ID}
+                            onChange={(e) => {
+                              if (mapSelected && mapSelected.ID && mapSelected.ID !== e.target.value) {
+                                setMapSelected({...mapSelected, ID: e.target.value})
+                              }
+                            }}
+                            options={{ placeholder: "Mapa" }}
+                            className="form-control"
+                            data={maps && maps.map(item => {
+                                return {id: item.ID, text: item.Titulo}
+                            })}
+                        />
+                    </FormGroup>
+                    <FormGroup className="form-group-float" style={{marginBottom: "20px"}}>
+                        <Label
+                            htmlFor="mapa"
+                        >
+                            Fecha de devolución
+                        </Label>
+
+                        <Input
+                        type="date"
+                        name="date"
+                        value={date}
+                        onChange={handleChange}
+                        />
+                    </FormGroup>
+                    
                     <div>
-                        <Button variant="primary">Aceptar</Button>{' '}
+                        <Button onClick={saveData} variant="primary">Aceptar</Button>{' '}
                         <Button onClick={handleClose} variant="danger">Cancelar</Button>{' '}
                     </div>
                 </div>

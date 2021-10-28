@@ -1,3 +1,5 @@
+@import "theme/components.css";
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -188,3 +190,64 @@ code {
   color: white;
 }
 
+.select2 {
+  width: 100% !important;
+}
+.select2-selection--multiple {
+  box-shadow: 0 0 0 0 transparent;
+  border-bottom: 1px solid #ddd;
+}
+
+.select2-selection--multiple:focus,
+.select2-container--open .select2-selection--multiple {
+  border-bottom-color: #009688;
+  box-shadow: 0 1px 0 #009688;
+}
+
+.select2-selection--multiple .select2-selection__choice {
+  border-radius: 0;
+  padding: 0.25rem 0.25rem;
+}
+
+.select2-close-mask {
+  z-index: 2099;
+}
+.select2-dropdown {
+  z-index: 3051;
+}
+
+.MuiSelect-root,
+.MuiInputBase-root,
+.MuiInput-root {
+  width: 100%;
+}
+
+.MuiInput-underline.MuiInput-underline.Mui-focused.Mui-focused:after {
+  border-bottom-color: #009688;
+  box-shadow: 0 1px 0 #009688;
+}
+
+.control-label {
+  display: block !important;
+}
+
+.mapsReserved {
+  width: 80%;
+  max-width: 100%;
+  display: inline-block;
+  height: 90vh;
+  text-align: center;
+  overflow: scroll;
+}
+
+.mapsReserved table {
+  width: 100%;
+}
+
+.mapsReserved table th {
+  border: solid 1px #cbc2c2;
+}
+
+.mapsReserved table td {
+  border: solid 1px #cbc2c2;
+}

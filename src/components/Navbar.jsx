@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { TextField, FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import Constantes from "../Constants/Constantes";
+
 
 const useStyles = makeStyles({
     select: {
@@ -23,8 +25,24 @@ const useStyles = makeStyles({
 })
 
 
-const Navbar = () => {
+const Navbar = (props) => {
+    const { setFiltro } = props;
     const classes = useStyles();
+    const [ filtroType, setFiltroType ] = useState("Titulo");
+    const [ filtroName, setFiltroName ] = useState("");
+
+    useEffect(()=>{
+        if (filtroName.length >= 0) {
+            callFiltro();
+        }
+    }, [filtroName])
+
+    const callFiltro = async () => {
+        const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/obtener_mapas.php?titulo=${filtroType}&nombre=${filtroName}`);
+        setFiltro(await respuesta.json());
+        // setFiltro(await respuesta.json());
+        // const ok = await respuesta.json();
+    }
 
     return(
         <div className="navbarClass">
@@ -37,7 +55,7 @@ const Navbar = () => {
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={10}
+                        value={filtroType}
                         label="Buscar por"
                         style={{color: "white"}}
                         className={classes.select}
@@ -47,12 +65,12 @@ const Navbar = () => {
                                 root: classes.root,
                             },
                         }}
-                        // onChange={handleChange}
+                        onChange={(e)=>{setFiltroType(e.target.value)}}
                     >
-                        <MenuItem value={10}>Título</MenuItem>
-                        <MenuItem value={20}>Empresa</MenuItem>
-                        <MenuItem value={30}>Tipo</MenuItem>
-                        <MenuItem value={40}>Zona</MenuItem>
+                        <MenuItem value="Titulo">Título</MenuItem>
+                        <MenuItem value="Empresa">Empresa</MenuItem>
+                        <MenuItem value="Tipo">Tipo</MenuItem>
+                        <MenuItem value="Zona_Geografica">Zona Geografica</MenuItem>
                     </Select>
                 </FormControl>
                 {/* <TextField 
@@ -63,7 +81,7 @@ const Navbar = () => {
                     style={{color: "white"}}
                 /> */}
                 <div className="inputBuscar">
-                    <input type="text" placeholder="Buscar" />
+                    <input type="text" value={filtroName} onChange={(e)=>{setFiltroName(e.target.value)}} placeholder="Buscar" />
                 </div>
             </div>
             

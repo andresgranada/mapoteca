@@ -49,7 +49,7 @@ const Map = (props) => {
     }
 
     const eliminarMapa = async () => {
-        const respuesta = await fetch(`${Constantes.RUTA_API}/crud/eliminar_mapa.php?id=${ID}`);
+        const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/eliminar_mapa.php?id=${ID}`);
         const ok = await respuesta.json();
         if (ok) {
             handleClose();

@@ -8,13 +8,19 @@ import Constantes from "../../Constants/Constantes";
 
 const Maps = (props) => {
 
+    const { filtro } = props;
     const [ maps, setMaps ] = useState([]);
     const [idMapToShow, setIdMapToShow] = useState(null);
 
 
+    useEffect(()=>{
+        if (filtro.length >= 0) {
+            setMaps(filtro);
+        }
+    }, [filtro])
 
     useEffect(async () => {
-        const respuesta = await fetch(`${Constantes.RUTA_API}/crud/obtener_mapas.php`);
+        const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/obtener_mapas.php`);
         setMaps(await respuesta.json());
     }, [])
 

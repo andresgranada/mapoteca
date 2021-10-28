@@ -18,7 +18,7 @@ const MapDetail = (props) => {
 
     useEffect(async () => {
         if (idMapToShow) {
-            const respuesta = await fetch(`${Constantes.RUTA_API}/crud/obtener_mapa.php?id=${idMapToShow}`);
+            const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/obtener_mapa.php?id=${idMapToShow}`);
             setMapToShow(await respuesta.json());
         }
     }, [idMapToShow])

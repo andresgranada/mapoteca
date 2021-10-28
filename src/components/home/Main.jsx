@@ -9,29 +9,7 @@ function Home() {
 
     const [ itemSelected, setItemSelected ] = useState('showMaps');
     const [ elementSelected, setElementSelected ] = useState(null);
-
-    useEffect(() => {
-        setElementSelected(itemSelectedSwitch(itemSelected));
-    }, [itemSelected])
-    
-
-    const itemSelectedSwitch = (key) => {
-      console.log(key);
-        let element;
-        switch (key) {
-            case 'showMaps':
-                element = <Maps />;
-                break;
-            case 'reserved':
-                element = <Reserved />;
-                break;
-            case 'favorites':
-                element = <Favorites />;
-                break;
-        }
-
-        return element
-    }
+    const [ filtro, setFiltro ] = useState([]);
 
     const itemsSideBar = [
         {name: 'Ver mapas', click: 'showMaps'},
@@ -41,9 +19,18 @@ function Home() {
     ]
   return (
     <div>
-      <Navbar />
+      <Navbar setFiltro={setFiltro} />
       <Sidebar itemsSideBar={itemsSideBar} setItemSelected={setItemSelected} itemSelected={itemSelected} />
-      {elementSelected}
+      
+      {
+        itemSelected == "showMaps" ? (
+          <Maps filtro={filtro}  />
+        ) : itemSelected == "reserved" ? (
+          <Reserved />
+        ) : itemSelected == "favorites" && (
+          <Favorites />
+        )
+      }
     </div>
   );
 }
