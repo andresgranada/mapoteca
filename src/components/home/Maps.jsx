@@ -31,7 +31,6 @@ const Maps = (props) => {
                     !idMapToShow && (
                         <Row>
                             { maps.map((map, i) => {
-                                console.log(map);
                                 return(
                                     <Col key={i} xs="12" md="4" sm="6" style={{textAlign: "center"}} >
                                         <Map mapInfo={map} setIdMapToShow={setIdMapToShow} />

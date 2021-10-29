@@ -5,11 +5,11 @@ import MapsReserve from './mapsReserve/MapsReserve';
 import Reserved from './mapsReserved/Reserved';
 import Users from './users/Users';
 import Sidebar from '../Sidebar';
+import ShowProfile from '../ShowProfile';
 
 function Admin() {
 
     const [ itemSelected, setItemSelected ] = useState('maps');
-    const [ elementSelected, setElementSelected ] = useState(null);
     const [ filtro, setFiltro ] = useState([]);
 
     const itemsSideBar = [
@@ -21,7 +21,7 @@ function Admin() {
 
   return (
     <div>
-      <Navbar setFiltro={setFiltro}/>
+      <Navbar setFiltro={setFiltro} setItemSelected={setItemSelected} />
       <Sidebar itemsSideBar={itemsSideBar} setItemSelected={setItemSelected} itemSelected={itemSelected} />
       
       {
@@ -31,8 +31,10 @@ function Admin() {
           <MapsReserve />
         ) : itemSelected == "reserved" ? (
           <Reserved />
-        ) : itemSelected == "users" && (
+        ) : itemSelected == "users" ? (
           <Users />
+        ) : itemSelected == "profile" && (
+          <ShowProfile />
         )
       }
     </div>

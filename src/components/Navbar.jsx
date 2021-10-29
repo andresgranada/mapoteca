@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 
 
 const Navbar = (props) => {
-    const { setFiltro } = props;
+    const { setFiltro, setItemSelected } = props;
     const classes = useStyles();
     const [ filtroType, setFiltroType ] = useState("Titulo");
     const [ filtroName, setFiltroName ] = useState("");
@@ -96,7 +96,7 @@ const Navbar = (props) => {
                 <Dropdown.Menu>
                     {/* <Dropdown.Item href="#/action-3"><FontAwesomeIcon icon={faPencilAlt}/></Dropdown.Item>
                     <Dropdown.Item href="#/action-3"><FontAwesomeIcon icon={faTrashAlt}/></Dropdown.Item> */}
-                    <Dropdown.Item>Ver perfil</Dropdown.Item>
+                    <Dropdown.Item onClick={()=>{setItemSelected("profile")}} >Ver perfil</Dropdown.Item>
                     <Dropdown.Item onClick={()=>{localStorage.clear(); window.location.reload()}}>Cerrar sesión</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>

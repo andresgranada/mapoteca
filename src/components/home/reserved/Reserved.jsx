@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import Map from './Map';
+import Map from '../Map';
 import MapDetail from '../MapDetail';
 import { Container, Col, Row } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,9 +8,9 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 const Reserved = () => {
 
     const [ maps, setMaps ] = useState([
-        {id: '01', name: 'Mapa de Colombia', description: 'Pais Tropical', available: true, img: 'https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4'},
-        {id: '02', name: 'Mapa de Mexico', description: 'Pais con muchas playas', available: true, img: 'https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4'},
-        {id: '03', name: 'Mapa de Chile', description: 'Pais al sur', available: true, img: 'https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4'},
+        {id: '01', Titulo: 'Mapa de Colombia', description: 'Pais Tropical', available: true, img: 'https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4'},
+        {id: '02', Titulo: 'Mapa de Mexico', description: 'Pais con muchas playas', available: true, img: 'https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4'},
+        {id: '03', Titulo: 'Mapa de Chile', description: 'Pais al sur', available: true, img: 'https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4'},
     ]);
 
     const [mapToShow, setMapToShow] = useState(null);

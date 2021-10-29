@@ -5,12 +5,14 @@ const Map = (props) => {
 
     const [ showItems, setShowItems ] = useState(false);
 
-    const { ID, Titulo, TIPO, ZONA_GEOGRAFICA, EMPRESA } = props.mapInfo;
+    const { ID, Titulo, TIPO, ZONA_GEOGRAFICA, EMPRESA, URL_Imagen } = props.mapInfo;
     const { setIdMapToShow, hideReserve, showReserve, setOpenReserve, setMapSelected, hideDetalle } = props;
 
     const toggle = () => {
         setShowItems(!showItems);
     }
+
+    console.log(URL_Imagen);
 
     return(
         <div className="mapCard">
@@ -26,7 +28,7 @@ const Map = (props) => {
                         <div onClick={()=>{setOpenReserve(true); setMapSelected(props.mapInfo)}} className="addCar">Reservar</div>
                     )
                 }
-                <Card.Img variant="top" src="https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4" />
+                <Card.Img variant="top" src={URL_Imagen} />
                 <Card.Body>
                 <Card.Title>{Titulo}</Card.Title>
                 </Card.Body>

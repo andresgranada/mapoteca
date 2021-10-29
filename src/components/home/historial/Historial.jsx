@@ -23,6 +23,13 @@ const Historial = (props) => {
         <div className="maps">
             <Container>
                 <Row>
+                    {
+                        maps.length <= 0 && (
+                            <div style={{width: "100%", textAlign: "center"}}>
+                                <h1>No tienes mapas registrado</h1>
+                            </div>
+                        )
+                    }
                     { maps && maps.map((map, i) => {
                         console.log(map);
                         return(

@@ -5,6 +5,7 @@ import Reserved from './reserved/Reserved';
 import Favorites from './favorites/Favorites';
 import Historial from './historial/Historial';
 import Sidebar from '../Sidebar';
+import ShowProfile from '../ShowProfile';
 
 function Home(props) {
     const { user } = props;
@@ -20,7 +21,7 @@ function Home(props) {
     ]
   return (
     <div>
-      <Navbar setFiltro={setFiltro} />
+      <Navbar setFiltro={setFiltro} setItemSelected={setItemSelected} />
       <Sidebar itemsSideBar={itemsSideBar} setItemSelected={setItemSelected} itemSelected={itemSelected} />
       
       {
@@ -30,8 +31,10 @@ function Home(props) {
           <Reserved />
         ) : itemSelected == "favorites" ? (
           <Favorites />
-        ) : itemSelected == "historial" && (
+        ) : itemSelected == "historial" ? (
           <Historial user={user} />
+        ) : itemSelected == "profile" && (
+          <ShowProfile />
         )
       }
     </div>

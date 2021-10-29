@@ -41,12 +41,14 @@ const Map = (props) => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const { ID, Titulo, TIPO, ZONA_GEOGRAFICA, EMPRESA } = props.mapInfo;
+    const { ID, Titulo, TIPO, ZONA_GEOGRAFICA, EMPRESA, URL_Imagen } = props.mapInfo;
     const { setIdFormToShow, getMapas } = props;
 
     const toggle = () => {
         setShowItems(!showItems);
     }
+
+    console.log(URL_Imagen);
 
     const eliminarMapa = async () => {
         const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/eliminar_mapa.php?id=${ID}`);
@@ -96,7 +98,7 @@ const Map = (props) => {
                         <Dropdown.Item onClick={handleOpen} >Eliminar</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
-                <Card.Img variant="top" src="https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4" />
+                <Card.Img variant="top" src={URL_Imagen} />
                 <Card.Body>
                 <Card.Title>{Titulo}</Card.Title>
                 </Card.Body>

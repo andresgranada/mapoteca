@@ -21,7 +21,7 @@ const FormComponent = (props) => {
 
     const { idFormToShow, setIdFormToShow, getMapas } = props;
     const [mapToShow, setMapToShow] = useState({
-        Imagen: "",
+        URL_Imagen: "",
         Empresa: "",
         Escala: "",
         ID: null,
@@ -69,7 +69,7 @@ const FormComponent = (props) => {
             <Form style={{width: "60%", margin: "50px auto"}} onSubmit={guardarMapa}>
                 <Form.Group className="mb-3" controlId="image">
                     <Form.Label>Url Imagen</Form.Label>
-                    <Form.Control onChange={(e)=>{setMapToShow({...mapToShow, Titulo: e.target.value})}} defaultValue={mapToShow.Titulo} type="text" placeholder="Imagen" />
+                    <Form.Control onChange={(e)=>{setMapToShow({...mapToShow, URL_Imagen: e.target.value})}} defaultValue={mapToShow.URL_Imagen} type="text" placeholder="Imagen" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="title">
                     <Form.Label>Título</Form.Label>

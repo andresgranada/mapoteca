@@ -3,7 +3,7 @@ import { Card, Dropdown, Button, Form } from 'react-bootstrap';
 
 
 function SignIn (props) {
-    const { setSignIn, dataSign, setDataSign } = props;
+    const { setSignIn, dataSign, setDataSign, registerUser } = props;
 
   return (
     <div className="signIn">
@@ -32,7 +32,7 @@ function SignIn (props) {
             <Form.Control onChange={(e)=>{setDataSign({...dataSign, Password: e.target.value})}} defaultValue={dataSign.Password} type="password" placeholder="Contraseña" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="buttons" style={{marginTop: "20px", padding: "0 50px"}}>
-            <Button variant="primary">Registrarse</Button>{' '}
+            <Button onClick={registerUser} variant="primary">Registrarse</Button>{' '}
             <Button style={{float: "right"}} onClick={()=>{setSignIn(false)}} variant="secondary">Cancelar</Button>{' '}
         </Form.Group>
     </div>
