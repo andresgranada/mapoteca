@@ -3,10 +3,11 @@ import Navbar from '../Navbar';
 import Maps from './Maps';
 import Reserved from './reserved/Reserved';
 import Favorites from './favorites/Favorites';
+import Historial from './historial/Historial';
 import Sidebar from '../Sidebar';
 
-function Home() {
-
+function Home(props) {
+    const { user } = props;
     const [ itemSelected, setItemSelected ] = useState('showMaps');
     const [ elementSelected, setElementSelected ] = useState(null);
     const [ filtro, setFiltro ] = useState([]);
@@ -14,7 +15,7 @@ function Home() {
     const itemsSideBar = [
         {name: 'Ver mapas', click: 'showMaps'},
         {name: 'Mapas reservados', click: 'reserved'},
-        {name: 'Mapas favoritos', click: 'favorites'},
+        // {name: 'Mapas favoritos', click: 'favorites'},
         {name: 'Historial', click: 'historial'},
     ]
   return (
@@ -27,8 +28,10 @@ function Home() {
           <Maps filtro={filtro}  />
         ) : itemSelected == "reserved" ? (
           <Reserved />
-        ) : itemSelected == "favorites" && (
+        ) : itemSelected == "favorites" ? (
           <Favorites />
+        ) : itemSelected == "historial" && (
+          <Historial user={user} />
         )
       }
     </div>

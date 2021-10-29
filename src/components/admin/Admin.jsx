@@ -3,6 +3,7 @@ import Navbar from '../Navbar';
 import Maps from './Maps';
 import MapsReserve from './mapsReserve/MapsReserve';
 import Reserved from './mapsReserved/Reserved';
+import Users from './users/Users';
 import Sidebar from '../Sidebar';
 
 function Admin() {
@@ -15,6 +16,7 @@ function Admin() {
         {name: 'Mapas', click: 'maps'},
         {name: 'Mapas prestados', click: 'reserved'},
         {name: 'Reservar', click: 'reserve'},
+        {name: 'Usuarios', click: 'users'},
     ]
 
   return (
@@ -27,8 +29,10 @@ function Admin() {
           <Maps filtro={filtro}  />
         ) : itemSelected == "reserve" ? (
           <MapsReserve />
-        ) : itemSelected == "reserved" && (
+        ) : itemSelected == "reserved" ? (
           <Reserved />
+        ) : itemSelected == "users" && (
+          <Users />
         )
       }
     </div>

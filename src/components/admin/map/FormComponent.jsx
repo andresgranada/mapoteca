@@ -67,10 +67,10 @@ const FormComponent = (props) => {
     return(
         <div className="form">
             <Form style={{width: "60%", margin: "50px auto"}} onSubmit={guardarMapa}>
-                {/* <Form.Group className="mb-3" controlId="title">
+                <Form.Group className="mb-3" controlId="image">
                     <Form.Label>Url Imagen</Form.Label>
                     <Form.Control onChange={(e)=>{setMapToShow({...mapToShow, Titulo: e.target.value})}} defaultValue={mapToShow.Titulo} type="text" placeholder="Imagen" />
-                </Form.Group> */}
+                </Form.Group>
                 <Form.Group className="mb-3" controlId="title">
                     <Form.Label>Título</Form.Label>
                     <Form.Control onChange={(e)=>{setMapToShow({...mapToShow, Titulo: e.target.value})}} defaultValue={mapToShow.Titulo} type="text" placeholder="Título" />

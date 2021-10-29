@@ -39,7 +39,8 @@ const ModalReserve = (props) => {
         ID: null,
         Tipo: "",
         Titulo: "",
-        Zona_Geografica: ""
+        Zona_Geografica: "",
+        ID_mapa: ""
     });
     const [ userSelected, setUserSelected ] = useState({
         ApellidoM: "",
@@ -71,14 +72,15 @@ const ModalReserve = (props) => {
     
     useEffect(()=>{
         if (mapName) {
-            setMapSelected(mapName);
+            setMapSelected({...mapName, ID_mapa: mapName.ID});
         }
     }, [mapName])
     
     
     useEffect(()=>{
         if (mapEdit) {
-            setMapSelected(mapEdit);
+            console.log(mapEdit);
+            setMapSelected({...mapEdit, ID_mapa: mapEdit.ID_libro});
             setUserSelected({...userSelected, ID: mapEdit.Clave_Usuario});
             setDate(mapEdit.Fecha_Devolucion);
         }
@@ -101,7 +103,8 @@ const ModalReserve = (props) => {
     const saveData = async () => {
         if (mapSelected.ID && userSelected.ID && date) {
             sendData({
-                ID_mapa: mapSelected.ID,
+                ID: mapEdit && mapEdit.ID ? mapEdit.ID : null,
+                ID_mapa: mapSelected.ID_mapa,
                 ID_usuario: userSelected.ID,
                 Fecha_devolucion: date,
             });
@@ -146,7 +149,7 @@ const ModalReserve = (props) => {
                             })}
                         />
                     </FormGroup>
-                    <FormGroup className="form-group-float" style={{marginBottom: "10px"}}>
+                    {/* <FormGroup className="form-group-float" style={{marginBottom: "10px"}}>
                         <Label
                             htmlFor="mapa"
                         >
@@ -156,10 +159,10 @@ const ModalReserve = (props) => {
                         <Select2
                             name="mapa"
                             id="mapa"
-                            value={mapSelected.ID}
+                            value={mapSelected.ID_mapa}
                             onChange={(e) => {
-                              if (mapSelected && mapSelected.ID && mapSelected.ID !== e.target.value) {
-                                setMapSelected({...mapSelected, ID: e.target.value})
+                              if (mapSelected && mapSelected.ID_mapa !== e.target.value) {
+                                setMapSelected({...mapSelected, ID_mapa: e.target.value})
                               }
                             }}
                             options={{ placeholder: "Mapa" }}
@@ -168,7 +171,7 @@ const ModalReserve = (props) => {
                                 return {id: item.ID, text: item.Titulo}
                             })}
                         />
-                    </FormGroup>
+                    </FormGroup> */}
                     <FormGroup className="form-group-float" style={{marginBottom: "20px"}}>
                         <Label
                             htmlFor="mapa"

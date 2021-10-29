@@ -6,7 +6,7 @@ const Map = (props) => {
     const [ showItems, setShowItems ] = useState(false);
 
     const { ID, Titulo, TIPO, ZONA_GEOGRAFICA, EMPRESA } = props.mapInfo;
-    const { setIdMapToShow, hideReserve, showReserve, setOpenReserve, setMapSelected } = props;
+    const { setIdMapToShow, hideReserve, showReserve, setOpenReserve, setMapSelected, hideDetalle } = props;
 
     const toggle = () => {
         setShowItems(!showItems);
@@ -16,7 +16,11 @@ const Map = (props) => {
         <div className="mapCard">
             <Card style={{textAlign: "center"}} onMouseOver={toggle} onMouseOut={toggle}>
                 <div className="hoverMap"></div>
-                <div className="detailMap" onClick={()=> {setIdMapToShow(ID)}} >Ver detalle</div>
+                {
+                    !hideDetalle && (
+                        <div className="detailMap" onClick={()=> {setIdMapToShow(ID)}} >Ver detalle</div>
+                    )
+                }
                 {
                     showReserve && (
                         <div onClick={()=>{setOpenReserve(true); setMapSelected(props.mapInfo)}} className="addCar">Reservar</div>

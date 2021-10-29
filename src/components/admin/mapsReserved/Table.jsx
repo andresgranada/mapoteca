@@ -8,12 +8,11 @@ import ModalReserve from '../mapsReserve/ModalReserve';
 
 function Table(props) {
 
-    const { reserved } = props;
-    const [ openReserve, setOpenReserve ] = useState(false);
+    const { reserved, sendData, openReserve, setOpenReserve, deleteReservedQuestion } = props;
     const [ reservedSelected, setReservedSelected ] = useState({});
     return (
         <Fragment>
-            <ModalReserve open={openReserve} setOpen={setOpenReserve} mapEdit={reservedSelected} />
+            <ModalReserve open={openReserve} setOpen={setOpenReserve} mapEdit={reservedSelected} sendData={sendData} />
             <table>
                 <thead>
                     <tr>
@@ -46,10 +45,10 @@ function Table(props) {
                                             style={{marginLeft: "5px", color:"green", cursor: "pointer"}} 
                                             onClick={()=>{setReservedSelected({...item, Titulo: item.Nombre_mapa})}} 
                                             icon={faCheckSquare} />
-                                        <FontAwesomeIcon 
+                                        {/* <FontAwesomeIcon 
                                             style={{marginLeft: "5px", color:"red", cursor: "pointer"}} 
-                                            onClick={()=>{setReservedSelected({...item, Titulo: item.Nombre_mapa})}} 
-                                            icon={faTrashAlt} />
+                                            onClick={()=>{deleteReservedQuestion(item.ID); setReservedSelected({...item, Titulo: item.Nombre_mapa})}} 
+                                            icon={faTrashAlt} /> */}
                                     </td>
                                 </tr>
                             )

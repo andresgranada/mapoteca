@@ -23,6 +23,7 @@ const MapsReserve = () => {
 
     const sendData = async (data) => {
         if (data) {
+            delete data.ID;
             const respuesta = await fetch(`${Constantes.RUTA_API}/crud/reservas/reservar.php`, {
                 method: "POST",
                 body: JSON.stringify(data),

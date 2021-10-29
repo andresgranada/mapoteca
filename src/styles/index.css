@@ -251,3 +251,29 @@ code {
 .mapsReserved table td {
   border: solid 1px #cbc2c2;
 }
+
+.login {
+  height: 100vh; 
+  width: 100%; 
+  background-color: #3434a1;
+  display: flex;
+  align-items: center;
+}
+
+.login .signIn {
+  width: 40%;
+  margin: 0 auto;
+  background-color: white;
+  padding: 35px;
+  border-radius: 40px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+.login .signIn div {
+  margin-bottom: 5px !important;
+}
+
+.login .signIn div label {
+  margin-bottom: 0 !important;
+}

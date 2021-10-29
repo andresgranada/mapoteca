@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { TextField, FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import Constantes from "../Constants/Constantes";
+import { Dropdown } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 
 const useStyles = makeStyles({
@@ -80,11 +83,23 @@ const Navbar = (props) => {
                     variant="standard"
                     style={{color: "white"}}
                 /> */}
-                <div className="inputBuscar">
+                <div className="inputBuscar" style={{marginTop: "8px"}}>
                     <input type="text" value={filtroName} onChange={(e)=>{setFiltroName(e.target.value)}} placeholder="Buscar" />
                 </div>
             </div>
-            
+
+            <Dropdown style={{position: "absolute", right: 20}}>
+                <Dropdown.Toggle id="dropdown-basic" style={{backgroundColor: "transparent", border: "none", fontSize: "20px"}}>
+                    <FontAwesomeIcon icon={faUserCircle}/>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    {/* <Dropdown.Item href="#/action-3"><FontAwesomeIcon icon={faPencilAlt}/></Dropdown.Item>
+                    <Dropdown.Item href="#/action-3"><FontAwesomeIcon icon={faTrashAlt}/></Dropdown.Item> */}
+                    <Dropdown.Item>Ver perfil</Dropdown.Item>
+                    <Dropdown.Item onClick={()=>{localStorage.clear(); window.location.reload()}}>Cerrar sesión</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
         </div>
     )
 
