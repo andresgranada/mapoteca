@@ -3,10 +3,13 @@ import Constantes from "../../../Constants/Constantes";
 import Table from "./Table";
 import ModalFunction from "../ModalFunction";
 import UpdateUser from "./UpdateUser";
+import { notify_error, notify_succes } from "../../../Constants/Alerts";
+import { ToastContainer, toast } from 'react-toastify';
 
 
 function Users(props) {
 
+  const { filtro } = props;
   const [ users, setUsers ] = useState([]);
   const [ openUser, setOpenUser ] = useState(false);
   const [ titleModalFunction, setTitleModalFunction ] = useState("");
@@ -27,6 +30,17 @@ function Users(props) {
     getUsers();
   }, [])
 
+    useEffect(()=>{
+      if (filtro) {
+        getUsersFiltro();
+      }
+  }, [filtro])
+
+  const getUsersFiltro = async () => {
+    const respuesta = await fetch(`${Constantes.RUTA_API}/crud/usuarios/obtener_usuarios.php?titulo=${filtro.tipo}&nombre=${filtro.nombre}`);
+    setUsers(await respuesta.json());
+  } 
+
   const getUsers = async () => {
       const respuesta = await fetch(`${Constantes.RUTA_API}/crud/usuarios/obtener_usuarios.php`);
       setUsers(await respuesta.json());
@@ -44,6 +58,7 @@ function Users(props) {
     const respuesta = await fetch(`${Constantes.RUTA_API}/crud/usuarios/eliminar_usuario.php?id=${id}`);
     const ok = await respuesta.json();
     if (ok) {
+      notify_succes("El usuario se elimina correctamente");
       getUsers();
       setOpenModalFunction(false);
     }
@@ -58,6 +73,7 @@ function Users(props) {
       const exitoso = await respuesta.json();
   
       if (exitoso) {
+        notify_succes("El usuario se actualiza correctamente");
         getUsers();
         setOpenUser(false);
         setOpenModalFunction(false);
@@ -67,21 +83,22 @@ function Users(props) {
 
   return (
     <div className="mapsReserved">
-        <UpdateUser setData={setData} data={data} open={openUser} setOpen={setOpenUser} actualizar={actualizarUsuario} />
-        <ModalFunction 
-            title={titleModalFunction} 
-            open={openModalFunction} 
-            acept={aceptModalFunction} 
-            setOpen={setOpenModalFunction} 
-        />
-        <Table 
-            users={users} 
-            openUser={openUser} 
-            setOpenUser={setOpenUser}
-            deleteUserQuestion={deleteUserQuestion}
-            setData={setData} 
-            data={data}
-        />
+      <ToastContainer />
+      <UpdateUser setData={setData} data={data} open={openUser} setOpen={setOpenUser} actualizar={actualizarUsuario} />
+      <ModalFunction 
+          title={titleModalFunction} 
+          open={openModalFunction} 
+          acept={aceptModalFunction} 
+          setOpen={setOpenModalFunction} 
+      />
+      <Table 
+          users={users} 
+          openUser={openUser} 
+          setOpenUser={setOpenUser}
+          deleteUserQuestion={deleteUserQuestion}
+          setData={setData} 
+          data={data}
+      />
     </div>
   );
 }

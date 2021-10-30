@@ -33,6 +33,10 @@ const updateUser = (props) => {
             <Box sx={style}>
                 <div id="modal-modal-description" sx={{ mt: 2 }} style={{textAlign: "center"}}>
                 <Form.Group className="mb-3" controlId="name">
+                    <Form.Label>Cédula</Form.Label>
+                    <Form.Control onChange={(e)=>{setData({...data, Cedula: e.target.value})}} defaultValue={data.Cedula} type="text" placeholder="Cédula" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="name">
                     <Form.Label>Nombre</Form.Label>
                     <Form.Control onChange={(e)=>{setData({...data, Nombre: e.target.value})}} defaultValue={data.Nombre} type="text" placeholder="Nombre" />
                 </Form.Group>

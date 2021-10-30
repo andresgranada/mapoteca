@@ -1,9 +1,8 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Card, Dropdown, Button, Form } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog, faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { Modal, Box, Typography } from '@mui/material';
 import Constantes from "../../../Constants/Constantes";
+import { notify_error, notify_succes } from "../../../Constants/Alerts";
+import { ToastContainer, toast } from 'react-toastify';
 
 const style = {
   position: 'absolute',
@@ -39,6 +38,11 @@ const FormComponent = (props) => {
 
     const guardarMapa = async (evento) => {
         evento.preventDefault();
+        if (!mapToShow.URL_Imagen || !mapToShow.Empresa || !mapToShow.Escala || !mapToShow.Tipo || !mapToShow.Titulo || !mapToShow.Zona_Geografica ) {
+            notify_error("Favor completar todos los campos");
+            return;
+        }
+
         if (!mapToShow.ID) {
             const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/crear_mapa.php`, {
                 method: "POST",
@@ -47,8 +51,11 @@ const FormComponent = (props) => {
             const exitoso = await respuesta.json();
 
             if (exitoso) {
-                setIdFormToShow(false);
-                getMapas();
+                notify_succes("Mapa creado");
+                setTimeout(() => {
+                    setIdFormToShow(false);
+                    getMapas();
+                }, 1000);
             }
         } else {
             const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/actualizar_mapa.php`, {
@@ -58,14 +65,18 @@ const FormComponent = (props) => {
             const exitoso = await respuesta.json();
 
             if (exitoso) {
-                setIdFormToShow(false);
-                getMapas();
+                notify_succes("Mapa actualizado");
+                setTimeout(() => {
+                    setIdFormToShow(false);
+                    getMapas();
+                }, 1000);
             }
         }
     }
 
     return(
         <div className="form">
+            <ToastContainer />
             <Form style={{width: "60%", margin: "50px auto"}} onSubmit={guardarMapa}>
                 <Form.Group className="mb-3" controlId="image">
                     <Form.Label>Url Imagen</Form.Label>

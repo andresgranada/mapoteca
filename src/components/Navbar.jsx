@@ -5,7 +5,7 @@ import Constantes from "../Constants/Constantes";
 import { Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
-
+import logo from '../img/logo.png';
 
 const useStyles = makeStyles({
     select: {
@@ -29,28 +29,24 @@ const useStyles = makeStyles({
 
 
 const Navbar = (props) => {
-    const { setFiltro, setItemSelected } = props;
+    const { setFiltro, setItemSelected, showFiltroUser } = props;
     const classes = useStyles();
     const [ filtroType, setFiltroType ] = useState("Titulo");
     const [ filtroName, setFiltroName ] = useState("");
 
     useEffect(()=>{
         if (filtroName.length >= 0) {
-            callFiltro();
+            setFiltro({
+                tipo: filtroType,
+                nombre: filtroName 
+            });
         }
     }, [filtroName])
-
-    const callFiltro = async () => {
-        const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/obtener_mapas.php?titulo=${filtroType}&nombre=${filtroName}`);
-        setFiltro(await respuesta.json());
-        // setFiltro(await respuesta.json());
-        // const ok = await respuesta.json();
-    }
 
     return(
         <div className="navbarClass">
         <div className="logo">
-            <h6>Mapoteca Logo</h6>
+            <img style={{width: "80px"}} src={logo} />
         </div>
             <div className="filters">
                 <FormControl className="filter" variant="standard" sx={{ m: 1, minWidth: 120 }}>
@@ -74,6 +70,11 @@ const Navbar = (props) => {
                         <MenuItem value="Empresa">Empresa</MenuItem>
                         <MenuItem value="Tipo">Tipo</MenuItem>
                         <MenuItem value="Zona_Geografica">Zona Geografica</MenuItem>
+                        {   
+                            showFiltroUser && (
+                                <MenuItem value="Cedula">Cédula</MenuItem>
+                            )
+                        }
                     </Select>
                 </FormControl>
                 {/* <TextField 

@@ -38,7 +38,7 @@ code {
 }
 
 .navbarClass .logo {
-  margin-left: 20px;
+  margin-left: 65px;
   color: white;
 }
 
@@ -298,3 +298,12 @@ code {
   padding: 5px 0;
 }
 
+.userPassword {
+-webkit-text-security: disc;
+}
+
+.disableDiv {
+  text-align: center;
+  pointer-events: none;
+  opacity: 0.3;
+}

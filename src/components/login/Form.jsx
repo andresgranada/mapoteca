@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Card, Dropdown, Button, Form } from 'react-bootstrap';
+import logo from '../../img/logo2.png';
 
 
 function FormLogin (props) {
@@ -11,7 +12,7 @@ function FormLogin (props) {
   return (
     <div className="signIn">
         <div className="text-center">
-            <h3>Logo mapoteca</h3>
+            <img style={{width: "150px"}} src={logo} />
         </div>
         <Form.Group className="mb-3" controlId="user">
             <Form.Label>Usuario</Form.Label>

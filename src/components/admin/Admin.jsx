@@ -10,29 +10,43 @@ import ShowProfile from '../ShowProfile';
 function Admin() {
 
     const [ itemSelected, setItemSelected ] = useState('maps');
-    const [ filtro, setFiltro ] = useState([]);
+    const [ filtro, setFiltro ] = useState({
+      tipo: "",
+      nombre: ""
+    });
+    const [ showFiltroUser, setShowFiltroUser ] = useState(false);
 
     const itemsSideBar = [
         {name: 'Mapas', click: 'maps'},
-        {name: 'Mapas prestados', click: 'reserved'},
         {name: 'Reservar', click: 'reserve'},
+        {name: 'Mapas prestados', click: 'reserved'},
         {name: 'Usuarios', click: 'users'},
     ]
 
+    useEffect(() => {
+      if (itemSelected == "reserved" || itemSelected == "users") {
+        setShowFiltroUser(true);
+      } else {
+        if (showFiltroUser) {
+          setShowFiltroUser(false);
+        }
+      }
+    }, [itemSelected])
+
   return (
     <div>
-      <Navbar setFiltro={setFiltro} setItemSelected={setItemSelected} />
+      <Navbar setFiltro={setFiltro} setItemSelected={setItemSelected} showFiltroUser={showFiltroUser} />
       <Sidebar itemsSideBar={itemsSideBar} setItemSelected={setItemSelected} itemSelected={itemSelected} />
       
       {
         itemSelected == "maps" ? (
           <Maps filtro={filtro}  />
         ) : itemSelected == "reserve" ? (
-          <MapsReserve />
+          <MapsReserve filtro={filtro} />
         ) : itemSelected == "reserved" ? (
-          <Reserved />
+          <Reserved filtro={filtro} />
         ) : itemSelected == "users" ? (
-          <Users />
+          <Users filtro={filtro} />
         ) : itemSelected == "profile" && (
           <ShowProfile />
         )

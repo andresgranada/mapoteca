@@ -4,16 +4,32 @@ import MapDetail from '../MapDetail';
 import { Container, Col, Row } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import Constantes from "../../../Constants/Constantes";
 
 const Reserved = () => {
 
-    const [ maps, setMaps ] = useState([
-        {id: '01', Titulo: 'Mapa de Colombia', description: 'Pais Tropical', available: true, img: 'https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4'},
-        {id: '02', Titulo: 'Mapa de Mexico', description: 'Pais con muchas playas', available: true, img: 'https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4'},
-        {id: '03', Titulo: 'Mapa de Chile', description: 'Pais al sur', available: true, img: 'https://webassets.tomtom.com/otf/images/media/54A21F80-6FDC-44EB-8876FC9C915E06E4'},
-    ]);
-
+    const [ maps, setMaps ] = useState([]);
     const [mapToShow, setMapToShow] = useState(null);
+
+    useEffect(() => {
+        getMaps();
+    }, [])
+    
+    useEffect(() => {
+        if (maps.length > 0 && !maps[0].ID) {
+            setMaps(maps.map(item => {
+                return {
+                    ...item, ID: item.ID_Mapa
+                }
+            }));
+        }
+        console.log(maps);
+    }, [maps])
+
+    const getMaps = async () => {
+        const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/mapas_usuario.php?id=${localStorage.getItem("user")}`);
+        setMaps(await respuesta.json());
+    }
 
     return(
         <div className="maps">
@@ -22,10 +38,9 @@ const Reserved = () => {
                     !mapToShow && (
                         <Row>
                             { maps.map((map, i) => {
-                                console.log(map);
                                 return(
                                     <Col key={i} xs="12" md="4" sm="6" style={{textAlign: "center"}} >
-                                        <Map mapInfo={map} setMapToShow={setMapToShow} />
+                                        <Map showDate={true} showStatus={true} mapInfo={map} setIdMapToShow={setMapToShow} />
                                     </Col>
                                 )
                             }) }
@@ -36,7 +51,7 @@ const Reserved = () => {
                     mapToShow && (
                         <Fragment>
                             <FontAwesomeIcon onClick={()=>{setMapToShow(null)}} className="backToMaps" icon={faArrowLeft} />
-                            <MapDetail hideReserve={true} detail={maps[maps.findIndex(item => item.id == mapToShow)]} />
+                            <MapDetail hideReserve={true} idMapToShow={mapToShow} />
                         </Fragment>
                     )
                 }

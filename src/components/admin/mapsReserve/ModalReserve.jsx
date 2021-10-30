@@ -101,7 +101,7 @@ const ModalReserve = (props) => {
     }
 
     const saveData = async () => {
-        if (mapSelected.ID && userSelected.ID && date) {
+        if (userSelected.ID && date) {
             sendData({
                 ID: mapEdit && mapEdit.ID ? mapEdit.ID : null,
                 ID_mapa: mapSelected.ID_mapa,

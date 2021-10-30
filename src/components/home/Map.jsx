@@ -5,18 +5,23 @@ const Map = (props) => {
 
     const [ showItems, setShowItems ] = useState(false);
 
-    const { ID, Titulo, TIPO, ZONA_GEOGRAFICA, EMPRESA, URL_Imagen } = props.mapInfo;
-    const { setIdMapToShow, hideReserve, showReserve, setOpenReserve, setMapSelected, hideDetalle } = props;
+    const { ID, Titulo, TIPO, ZONA_GEOGRAFICA, EMPRESA, URL_Imagen, Fecha_Prestamo, Estatus, Disponible } = props.mapInfo;
+    const { setIdMapToShow, hideReserve, showReserve, setOpenReserve, setMapSelected, hideDetalle, showDisable } = props;
 
     const toggle = () => {
         setShowItems(!showItems);
     }
 
-    console.log(URL_Imagen);
+    console.log(Disponible);
 
     return(
-        <div className="mapCard">
-            <Card style={{textAlign: "center"}} onMouseOver={toggle} onMouseOut={toggle}>
+        <div className="mapCard" style={{position: "relative"}}>
+            {   
+                    Disponible <= 0 && (
+                        <h3 style={{top: "20%", right: "20%", position: "absolute"}}>Mapa reservado</h3>
+                    )
+            }
+            <Card style={{textAlign: "center"}} className={`${Disponible <= 0 && showDisable ? "disableDiv" : ""}`} onMouseOver={toggle} onMouseOut={toggle}>
                 <div className="hoverMap"></div>
                 {
                     !hideDetalle && (

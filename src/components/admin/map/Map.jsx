@@ -5,6 +5,7 @@ import { faCog, faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icon
 import { Modal, Box, Typography } from '@mui/material';
 import Constantes from "../../../Constants/Constantes";
 import { ToastContainer, toast } from 'react-toastify';
+import { notify_error, notify_succes } from "../../../Constants/Alerts";
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -41,19 +42,18 @@ const Map = (props) => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const { ID, Titulo, TIPO, ZONA_GEOGRAFICA, EMPRESA, URL_Imagen } = props.mapInfo;
-    const { setIdFormToShow, getMapas } = props;
+    const { ID, Titulo, TIPO, ZONA_GEOGRAFICA, EMPRESA, URL_Imagen, Disponible } = props.mapInfo;
+    const { setIdFormToShow, getMapas, showDisable } = props;
 
     const toggle = () => {
         setShowItems(!showItems);
     }
 
-    console.log(URL_Imagen);
-
     const eliminarMapa = async () => {
         const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/eliminar_mapa.php?id=${ID}`);
         const ok = await respuesta.json();
         if (ok) {
+            notify_error("Mapa eliminado");
             handleClose();
             getMapas();
         }
@@ -83,6 +83,7 @@ const Map = (props) => {
 
     return(
         <div className="mapCard">
+            <ToastContainer />
             <ModalComponent />
             <Card style={{textAlign: "center"}} onMouseOver={toggle} onMouseOut={toggle}>
                 <div className="hoverMap"></div>

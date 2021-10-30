@@ -13,6 +13,7 @@ function Table(props) {
             <table>
                 <thead>
                     <tr>
+                        <th>Cédula</th>
                         <th>Nombre</th>
                         <th>Primer apellido</th>
                         <th>Segundo apellido</th>
@@ -27,12 +28,13 @@ function Table(props) {
                         users && users.map((item, i) => {
                             return (
                                 <tr key={i}>
+                                    <td>{item.Cedula}</td>
                                     <td>{item.Nombre}</td>
                                     <td>{item.ApellidoP}</td>
                                     <td>{item.ApellidoM}</td>
                                     <td>{item.Direccion}</td>
                                     <td>{item.Usuarios}</td>
-                                    <td>{item.Password}</td>
+                                    <td className="userPassword">{item.Password}</td>
                                     <td>
                                         <FontAwesomeIcon 
                                             style={{marginLeft: "5px", color:"#8b8b2d", cursor: "pointer"}} 

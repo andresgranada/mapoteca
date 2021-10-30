@@ -11,11 +11,14 @@ function Home(props) {
     const { user } = props;
     const [ itemSelected, setItemSelected ] = useState('showMaps');
     const [ elementSelected, setElementSelected ] = useState(null);
-    const [ filtro, setFiltro ] = useState([]);
+    const [ filtro, setFiltro ] = useState({
+      tipo: "",
+      nombre: ""
+    });
 
     const itemsSideBar = [
         {name: 'Ver mapas', click: 'showMaps'},
-        {name: 'Mapas reservados', click: 'reserved'},
+        {name: 'Mapas actuales', click: 'reserved'},
         // {name: 'Mapas favoritos', click: 'favorites'},
         {name: 'Historial', click: 'historial'},
     ]
@@ -32,7 +35,7 @@ function Home(props) {
         ) : itemSelected == "favorites" ? (
           <Favorites />
         ) : itemSelected == "historial" ? (
-          <Historial user={user} />
+          <Historial user={user} filtro={filtro} />
         ) : itemSelected == "profile" && (
           <ShowProfile />
         )

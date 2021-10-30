@@ -5,19 +5,29 @@ import Constantes from "../../../Constants/Constantes";
 
 
 const Historial = (props) => {
-    const { user } = props;
+    const { user, filtro } = props;
     const [ maps, setMaps ] = useState([]);
 
     useEffect(() => {
         getMapas();
     }, [])
 
-    console.log(user);
 
     const getMapas = async () => {
         const respuesta = await fetch(`${Constantes.RUTA_API}/crud/usuarios/historial_usuario.php?id=${localStorage.getItem("user")}`);
         setMaps(await respuesta.json());
     }
+
+    useEffect(()=>{
+        if (filtro) {
+            getMapasFiltro();
+        }
+    }, [filtro])
+
+    const getMapasFiltro = async () => {
+        const respuesta = await fetch(`${Constantes.RUTA_API}/crud/usuarios/historial_usuario.php?id=${localStorage.getItem("user")}&titulo=${filtro.tipo}&nombre=${filtro.nombre}`);
+        setMaps(await respuesta.json());
+    } 
 
     return (
         <div className="maps">

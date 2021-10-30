@@ -17,6 +17,7 @@ function Login (props) {
     password: ""
   });
   const [ dataSign, setDataSign ] = useState({
+    Cedula:"",
     Nombre: "",
     ApellidoP: "",
     ApellidoM: "",

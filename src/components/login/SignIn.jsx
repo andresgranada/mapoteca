@@ -7,6 +7,10 @@ function SignIn (props) {
 
   return (
     <div className="signIn">
+        <Form.Group className="mb-3" controlId="Cedula">
+            <Form.Label>Cédula</Form.Label>
+            <Form.Control onChange={(e)=>{setDataSign({...dataSign, Cedula: e.target.value})}} defaultValue={dataSign.Cedula} type="text" placeholder="Cédula" />
+        </Form.Group>
         <Form.Group className="mb-3" controlId="name">
             <Form.Label>Nombre</Form.Label>
             <Form.Control onChange={(e)=>{setDataSign({...dataSign, Nombre: e.target.value})}} defaultValue={dataSign.Nombre} type="text" placeholder="Nombre" />

@@ -20,10 +20,15 @@ const Maps = (props) => {
     }, [])
 
     useEffect(()=>{
-        if (filtro.length >= 0) {
-            setMaps(filtro);
+        if (filtro) {
+            getMapasFiltro();
         }
     }, [filtro])
+
+    const getMapasFiltro = async () => {
+        const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/obtener_mapas.php?titulo=${filtro.tipo}&nombre=${filtro.nombre}`);
+        setMaps(await respuesta.json());
+    } 
 
     const getMapas = async () => {
         const respuesta = await fetch(`${Constantes.RUTA_API}/crud/mapas/obtener_mapas.php`);
